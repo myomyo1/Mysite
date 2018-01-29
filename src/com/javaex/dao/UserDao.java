@@ -57,7 +57,7 @@ public class UserDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		UserVo uservo = new UserVo();
+		UserVo uservo = null;
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -74,6 +74,7 @@ public class UserDao {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
+				uservo = new UserVo();
 				int no = rs.getInt("no");
 				String name = rs.getString("name");
 				uservo.setNo(no);

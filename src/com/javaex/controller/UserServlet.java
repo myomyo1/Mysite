@@ -23,10 +23,8 @@ public class UserServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		System.out.println("user 진입");
 		String actionName = request.getParameter("a");
-		if(actionName.equals("joinform")) { //가입양식(joinform.jsp)만 보여줄 것
+		if(actionName.equals("joinform")) { 
 			System.out.println("joinform 진입");
-			// / 쓰면  mysite까지 불러와지므로 그 밑에 주소
-			// servelet을 "/user" 라고 저장했으므로 "http://localhost:8088/mysite/user?a=joinform" : joinform으로 이동
 			WebUtil.forward(request, response, "/WEB-INF/views/user/joinform.jsp");   
 		}else if(actionName.equals("join")) { //joinform에서 입력한 값들을 여기에 받아야함.
 			System.out.println("join 진입");

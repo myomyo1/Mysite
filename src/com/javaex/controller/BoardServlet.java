@@ -26,21 +26,21 @@ public class BoardServlet extends HttpServlet {
 							
 		if(actionName.equals("list")) {
 			System.out.println("list 진입");
-			BoardDao dao = new BoardDao();
-			List<BoardVo> blist = dao.showListAll(); 
-			request.setAttribute("list", blist);
-			WebUtil.forward(request, response, "WEB-INF/views/board/list.jsp");
+			BoardDao dao = new BoardDao(); 
+			List<BoardVo> blist = dao.showListAll(); // 리스트 객체를 반환하는 showListAll() : select함수 사용하여 blist에 저장 
+			request.setAttribute("list", blist); // blist 값을 "list"이름으로 세팅 + 게시물은 list.jsp에서 forEach문으로 리스트 뿌려줄 예정.
+			WebUtil.forward(request, response, "WEB-INF/views/board/list.jsp"); //list.jsp 파일로 이동하라고 명령.
 		}else if(actionName.equals("view")) {
 			System.out.println("view 진입");
-			BoardDao dao = new BoardDao(); //BoardDao에 만든 viewBoard함수 꺼내오기위해
-			int no = Integer.parseInt(request.getParameter("no")); //list에서 넘겨준 "no"값 받기위해 getparameter로
-			dao.countHit(no);
-			BoardVo vo =dao.viewBoard(no);//위 번호 받아서 함수실행하면 제목, 내용이 담겨진 객체를 받아옴
-			request.setAttribute("board", vo); // 위객체를 다음페이지에 보내기위해 세팅
-			WebUtil.forward(request, response, "WEB-INF/views/board/view.jsp");
+			int number = Integer.parseInt(request.getParameter("no")); //list.jsp에서 (링크에 이름 지정해서)넘겨준 "no"값 받아옴
+			BoardDao dao = new BoardDao(); 
+			dao.countHit(number); //countHit(no) 함수 : board테이블에 게시물번호 no(primary key)를 받아서 조회수 +1 시키는 update함수
+			BoardVo vo =dao.viewBoard(number); // viewBoard()함수실행 : 받아온 no에 해당하는 제목, 내용, 유저넘버를 객체에 저장하여 select함수로 뽑아옴. + view.jsp에서 제목, 내용 보여줄때 사용할 예정.
+			request.setAttribute("board", vo); // 위객체를 다음페이지에 보내기위해 board 이름값으로 세팅
+			WebUtil.forward(request, response, "WEB-INF/views/board/view.jsp"); // view.jsp파일로 이동하라고 명령.
 		}else if(actionName.equals("writeform")) {
 			System.out.println("writeform 진입");
-			WebUtil.forward(request, response, "WEB-INF/views/board/write.jsp");
+			WebUtil.forward(request, response, "WEB-INF/views/board/write.jsp"); //
 			 
 		}else if(actionName.equals("write")) {
 			System.out.println("write진입");
@@ -87,30 +87,8 @@ public class BoardServlet extends HttpServlet {
 		}
 	}
 
-//		}else if(actionName.equals("deleteform")) {
-//			System.out.println("deleteform 진입");
-//			int no = Integer.parseInt(request.getParameter("no"));
-//			request.setAttribute("no", no);
-////			RequestDispatcher rd = request.getRequestDispatcher("guestDeleteform.jsp"); //"~" : 포워드할 페이지 지정해준 것. 
-////			rd.forward(request, response); //url로 확인해보면 포워드 시킨 상태로 guestList.jsp화면이 보여짐.
-//			WebUtil.forward(request, response, "/WEB-INF/views/guestbook/deleteform.jsp");
-//			//이제 http://localhost:8088/guest2/guestList.jsp X. 
-//			//사용자요청 : http://localhost:8088/guest2/WEB-INF/guestDeleteform.jsp X.
-//		}else if(actionName.equals("delete")) {
-//			System.out.println("delete 진입");
-//			int no = Integer.parseInt(request.getParameter("no"));
-//			String pw = request.getParameter("password");
-//			GuestbookDao dao = new GuestbookDao();
-//			dao.delete(no, pw);
-////			response.sendRedirect("gs?a=list");
-//			WebUtil.redirect(request, response, "/mysite/guestbook?a=list");
-//		}
-//		
-//	}
-//
-//
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		doGet(request, response);
-}
+	}
 }

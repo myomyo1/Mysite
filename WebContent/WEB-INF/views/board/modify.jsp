@@ -7,8 +7,7 @@
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="/mysite/assets/css/board.css" rel="stylesheet"
-	type="text/css">
+<link href="/mysite/assets/css/board.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
@@ -23,8 +22,7 @@
 
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post"
-					action="/mysite/board?a=modify&no=${vo.no}">
+				<form class="board-form" method="post" action="/mysite/board?a=modify&no=${vo.no}">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글수정</th>
@@ -35,13 +33,11 @@
 						</tr>
 						<tr>
 							<td class="label">내용</td>
-							<td><textarea id="content" name="content">
-									 ${vo.content}
-								</textarea></td>
+							<td><textarea id="content" name="content">${vo.content}</textarea></td>
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="">취소</a> <input type="submit" value="수정">
+						<a href="/mysite/board?a=list">취소</a> <input type="submit" value="수정">
 					</div>
 				</form>
 			</div>

@@ -7,8 +7,7 @@
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="/mysite/assets/css/board.css" rel="stylesheet"
-	type="text/css">
+<link href="/mysite/assets/css/board.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
@@ -40,7 +39,7 @@
 				</table>
 
 				<c:choose>
-					<c:when test="${board.userNo == authUser.no}">
+					<c:when test="${board.userNo == authUser.no}"> <!-- 게시글의 userNo와 로그인되있는 사용자의 no가 같으면 즉 작성자이면 -->
 						<div class="bottom">
 							<a href="/mysite/board?a=list">글목록</a> 
 							<a href="/mysite/board?a=modifyform&no=${board.no}">글수정</a>

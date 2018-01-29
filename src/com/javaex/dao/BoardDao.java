@@ -27,7 +27,7 @@ public class BoardDao {
 			String url = "jdbc:oracle:thin:@localhost:1521:xe";
 			conn = DriverManager.getConnection(url, "webdb", "webdb");
 
-			String query = "select b.no, b.title, u.name, b.hit, to_char(b.reg_date, 'YY-MM-DD hh:mm') reg_date from board b, users u where b.user_no=u.no";
+			String query = "select b.no, b.title, u.name, b.hit, to_char(b.reg_date, 'YY-MM-DD hh:mi') reg_date from board b, users u where b.user_no=u.no order by reg_date desc, b.no desc";
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
 
@@ -244,13 +244,13 @@ public class BoardDao {
 			String url = "jdbc:oracle:thin:@localhost:1521:xe";
 			conn = DriverManager.getConnection(url, "webdb", "webdb");
 			
-			String query = "update board set hit=hit+1 where no=?";  //★콤마자리확인
+			String query = "update board set hit = hit+1 where no = ? ";  //★콤마자리확인
 			pstmt = conn.prepareStatement(query);
 		
 			pstmt.setInt(1, no);
+			int result = pstmt.executeUpdate(); 
+			System.out.println("처리결과 : " + result);
 			
-			pstmt.executeUpdate(); 
-
 		} catch (ClassNotFoundException e) {
 			System.out.println("error: 드라이버 로딩 실패 - " + e);
 		} catch (SQLException e) {
