@@ -28,8 +28,15 @@ public class BoardServlet extends HttpServlet {
 			System.out.println("list 진입");
 			BoardDao dao = new BoardDao(); 
 			List<BoardVo> blist = dao.showListAll(); // 리스트 객체를 반환하는 showListAll() : select함수 사용하여 blist에 저장 
-			request.setAttribute("list", blist); // blist 값을 "list"이름으로 세팅 + 게시물은 list.jsp에서 forEach문으로 리스트 뿌려줄 예정.
-			WebUtil.forward(request, response, "WEB-INF/views/board/list.jsp"); //list.jsp 파일로 이동하라고 명령.
+			String kwd=request.getParameter("kwd");
+			List<BoardVo> slist = dao.search(kwd);
+			if(kwd==null) {
+				request.setAttribute("list", blist); // blist 값을 "list"이름으로 세팅 + 게시물은 list.jsp에서 forEach문으로 리스트 뿌려줄 예정.				
+			}else {
+				request.setAttribute("list", slist);
+			}
+
+			WebUtil.forward(request, response, "WEB-INF/views/board/list.jsp"); //list.jsp 파일로 이동하라고 명령.			
 		}else if(actionName.equals("view")) {
 			System.out.println("view 진입");
 			int number = Integer.parseInt(request.getParameter("no")); //list.jsp에서 (링크에 이름 지정해서)넘겨준 "no"값 받아옴
@@ -84,7 +91,8 @@ public class BoardServlet extends HttpServlet {
 			dao.modify(vo);				
 			
 			WebUtil.redirect(request, response, "/mysite/board?a=list");
-		}
+		}			
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
